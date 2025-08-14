@@ -1,6 +1,7 @@
 import { eq } from "drizzle-orm";
 import { db } from "../index.js";
 import { NewUser, users } from "../schema.js";
+import { hashPassword } from "src/auth.js";
 
 export async function createUser(user: NewUser) {
   const [result] = await db
@@ -18,4 +19,17 @@ export async function reset() {
 export async function getUserByEmail(email: string) {
   const [result] = await db.select().from(users).where(eq(users.email, email));
   return result;
+}
+
+export async function updateUser(userID: string, newEmail: string, newPassword: string) {
+  const [result] = await db
+    .update(users)
+    .set({
+      email: newEmail,
+      hashedPassword: newPassword
+    })
+    .where(eq(users.id, userID))
+    .returning();
+
+    return result;
 }
