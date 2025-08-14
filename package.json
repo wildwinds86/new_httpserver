@@ -17,7 +17,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.1",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^22.10.5",
+    "@types/node": "^22.17.1",
     "drizzle-kit": "^0.30.4",
     "drizzle-orm": "^0.44.4",
     "typescript": "^5.7.2",

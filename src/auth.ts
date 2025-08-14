@@ -2,8 +2,10 @@ import bcrypt from "bcrypt";
 import { Request } from "express"
 import jwt from "jsonwebtoken";
 import { BadRequestError, UserNotAuthenticatedError } from "./api/errors.js";
+import { randomBytes } from "crypto";
 
 import type { JwtPayload } from "jsonwebtoken";
+
 
 type payload = Pick<JwtPayload, "iss" | "sub" | "iat" | "exp">;
 const TOKEN_ISSUER = "chirpy";
@@ -41,7 +43,6 @@ export function validateJWT(tokenString: string, secret: string): string {
   try {
     decoded = jwt.verify(tokenString, secret) as JwtPayload;
   } catch (e) {
-    console.log(`==> ${tokenString}`);
     throw new UserNotAuthenticatedError("Invalid token");
   }
 
@@ -70,4 +71,8 @@ export function extractBearerToken(header: string) {
     throw new BadRequestError("Malformed authorization header");
   }
   return splitAuth[1];
+}
+
+export function makeRefreshToken(): string {
+  return randomBytes(32).toString('hex')
 }
