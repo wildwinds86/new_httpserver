@@ -34,11 +34,13 @@ export async function updateUser(userID: string, newEmail: string, newPassword: 
     return result;
 }
 
-export async function upgradeUser(userID: string) {
-  //console.log(`==>Upgrading user: ${userID}`);
-  return await db
+export async function upgradeChirpyRed(userID: string) {
+  
+  const [result] = await db
     .update(users)
     .set({isChirpyRed: true})
     .where(eq(users.id, userID))
     .returning();
+  
+    return result;
 }

@@ -1,0 +1,4 @@
+DB_URL="postgres://postgres:postgres@localhost:5432/chirpy?sslmode=disable"
+PORT="8080"
+PLATFORM="dev"
+SECRET="CB0tkikzvTBaQmLVyAO1kAYhRm9Qa+dp3Yrb2n+7JCWrNTo070RJIf/HsvqarXN+YTJM/cIPjoXayHrLIu0WWg=="

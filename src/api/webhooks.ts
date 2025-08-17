@@ -1,30 +1,27 @@
 import type { Request, Response } from "express";
-import { upgradeUser } from "../db/queries/users.js"
+import { upgradeChirpyRed } from "../db/queries/users.js"
 
 export async function handlerWebhooks(req: Request, res: Response) {
     
     type parameters = {
         event: string;
-        data: data;
+        data: {
+            userId: string;
+        };
     };
-
-    type data = {
-        userId: string
-    }
 
     const params: parameters = req.body;
     
-
-    if (!params.event || params.event !== "user.upgraded") {
+    if (params.event !== "user.upgraded") {
         console.log(`==>Problem with params: Event: ${params.event}`);
-        res.sendStatus(204);
+        res.status(204).send();
         return;
     }
 
     console.log(`==>Upgrading user: ${params.data.userId}`);
 
-    let upgraded = await upgradeUser(params.data.userId);
-    console.log(`==>Updated: ${upgraded[0].id}`)
+    let upgraded = await upgradeChirpyRed(params.data.userId);
+    console.log(`==>Updated: ${upgraded.id}`)
 
     if (!upgraded) {
         res.sendStatus(404);
