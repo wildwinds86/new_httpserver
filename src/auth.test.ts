@@ -5,6 +5,7 @@ import {
   makeJWT,
   validateJWT,
   extractBearerToken,
+  extractAPIKey,
 } from "./auth";
 import { BadRequestError, UserNotAuthenticatedError } from "./api/errors.js";
 
@@ -101,3 +102,11 @@ describe("extractBearerToken", () => {
     expect(() => extractBearerToken(header)).toThrow(BadRequestError);
   });
 });
+
+describe("Extract API key", () => {
+  it("should extract the API key from a header", () => {
+    const apiKey = "sldnfslkdnflsndfslnd";
+    const header = `ApiKey ${apiKey}`;
+    expect(extractAPIKey(header)).toBe(apiKey);
+  })
+})
